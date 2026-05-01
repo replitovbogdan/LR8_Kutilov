@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-4ju2n@$f9d0c=h)_g0lbb%k9&@rf(xa$d$g$&5ri$uf)*gev^4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ["REPLIT_DOMAINS"].split(',')
+ALLOWED_HOSTS = os.environ.get("REPLIT_DOMAINS", "localhost").split(',')
 CSRF_TRUSTED_ORIGINS = [
-    "https://" + domain for domain in os.environ["REPLIT_DOMAINS"].split(',')
+    "https://" + domain for domain in os.environ.get("REPLIT_DOMAINS", "").split(',')
 ]
 
 # Application definition
@@ -131,3 +131,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+SECURE_SSL_REDIRECT = True
+
+# Передача session cookie только по HTTPS
+SESSION_COOKIE_SECURE = True
+
+# Передача CSRF cookie только по HTTPS
+CSRF_COOKIE_SECURE = True
+
+# Включение HSTS на 1 год
+SECURE_HSTS_SECONDS = 31536000
+
+# Доверие к заголовку X-Forwarded-Proto от прокси
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
